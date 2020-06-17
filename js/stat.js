@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
@@ -6,20 +6,19 @@ var CLOUD_X = 100;
 var CLOUD_Y = 10;
 var GAP = 10;
 var BTWN_BARS = 50;
-var TEXT_WIDTH = 50;
 var BAR_WIDTH = 40;
 var BAR_HEIGHT = -150;
 var POSITION_X = 140;
 var POSITION_Y = 260;
 
-var renderCloud = function(ctx, x, y, color) {
+var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 
-//вызывает окно
+// вызывает окно
 
-var getMaxElement = function(arr) {
+var getMaxElement = function (arr) {
   var maxElement = arr[0];
 
   for (var i = 0; i < arr.length; i++) {
@@ -32,7 +31,7 @@ var getMaxElement = function(arr) {
 };
 
 window.renderStatistics = function (ctx, players, times) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)')
+  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
   ctx.fillStyle = '#000';
@@ -50,11 +49,10 @@ window.renderStatistics = function (ctx, players, times) {
     // --------  =  ---------
     // BAR_HEIGHT        X
 
-   // X = (BAR_HEIGHT * times[i]) / maxTime
+    // X = (BAR_HEIGHT * times[i]) / maxTime
 
     ctx.fillText(players[i], POSITION_X + (BTWN_BARS + BAR_WIDTH) * i, POSITION_Y);
-    ctx.fillRect(POSITION_X - GAP + (BTWN_BARS + BAR_WIDTH) * i, POSITION_Y - GAP * 2,
-    BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
+    ctx.fillRect(POSITION_X - GAP + (BTWN_BARS + BAR_WIDTH) * i, POSITION_Y - GAP * 2, BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
   }
 
   // ctx.fillStyle = 'rgba(255, 0, 0, 1)';
@@ -75,7 +73,7 @@ window.renderStatistics = function (ctx, players, times) {
   // ctx.fillText(playerName, POSITION_X + (BTWN_BARS + BAR_WIDTH) * playerIndex, POSITION_Y);
   // ctx.fillRect(POSITION_X - GAP + (BTWN_BARS + BAR_WIDTH) * playerIndex, POSITION_Y - GAP * 2, BAR_WIDTH, BAR_HEIGHT)
 
-  //надпcь
+  // надпcь
   ctx.font = '16px PT Mono';
   ctx.textBaseline = 'hanging';
   ctx.fillStyle = 'black';
