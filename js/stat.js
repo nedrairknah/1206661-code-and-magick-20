@@ -18,18 +18,22 @@ var renderCloud = function (ctx, x, y, color) {
 
 // вызывает окно
 
-var getMaxElement = function (arr) {
-  var maxElement = arr[0];
 
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i] > maxElement) {
-      maxElement = arr[i];
-    }
-  }
+// максимальное значение
 
-  return maxElement;
-};
+function getMaxElement(arr) {
+  return Math.max.apply(null, arr);
+}
 
+// списал у одногруппника, не понимаю где нам это объясняли, и как до этого можно было дойти самостоятельно
+function getRandomSaturation(hslColor) {
+  var randomSaturation = (Math.round(Math.random() * 100));
+  var colors = hslColor.split(',');
+  colors[1] = randomSaturation + '%';
+  return colors.join(',');
+}
+
+// вызывает окно
 window.renderStatistics = function (ctx, players, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
@@ -38,42 +42,21 @@ window.renderStatistics = function (ctx, players, times) {
 
   var maxTime = getMaxElement(times);
 
-  // var playerIndex = 0;
-  // var playerName ='Вы';
-
-  // var players = ['Вы', 'Иван', 'Юлия', 'Кекс'];
-
   for (var i = 0; i < players.length; i++) {
+    var colorPlayerColumn;
+    if (players[i] === 'Вы') {
+      colorPlayerColumn = 'rgba(255, 0, 0, 1)';
+    } else {
+      colorPlayerColumn = getRandomSaturation('hsl(249, 50%, 50%)');
+    }
 
-    // maxTime      times[i]
-    // --------  =  ---------
-    // BAR_HEIGHT        X
-
-    // X = (BAR_HEIGHT * times[i]) / maxTime
-
-    ctx.fillText(players[i], POSITION_X + (BTWN_BARS + BAR_WIDTH) * i, POSITION_Y);
+    ctx.fillStyle = colorPlayerColumn;
     ctx.fillRect(POSITION_X - GAP + (BTWN_BARS + BAR_WIDTH) * i, POSITION_Y - GAP * 2, BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
+    ctx.fillStyle = '#000';
+    ctx.fillText(players[i], POSITION_X + (BTWN_BARS + BAR_WIDTH) * i, POSITION_Y);
   }
 
-  // ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-  // ctx.fillText(playerName, POSITION_X + (BTWN_BARS + BAR_WIDTH) * playerIndex, POSITION_Y);
-  // ctx.fillRect(POSITION_X - GAP + (BTWN_BARS + BAR_WIDTH) * playerIndex, POSITION_Y - GAP * 2, BAR_WIDTH, BAR_HEIGHT)
-
-  // var playerIndex = 1;
-  // var playerName ='Иван';
-
-  // ctx.fillStyle = 'green';
-  // ctx.fillText(playerName, POSITION_X + (BTWN_BARS + BAR_WIDTH) * playerIndex, POSITION_Y);
-  // ctx.fillRect(POSITION_X - GAP + (BTWN_BARS + BAR_WIDTH) * playerIndex, POSITION_Y - GAP * 2, BAR_WIDTH, BAR_HEIGHT)
-
-  // var playerIndex = 2;
-  // var playerName ='Юлия';
-
-  // ctx.fillStyle = 'blue';
-  // ctx.fillText(playerName, POSITION_X + (BTWN_BARS + BAR_WIDTH) * playerIndex, POSITION_Y);
-  // ctx.fillRect(POSITION_X - GAP + (BTWN_BARS + BAR_WIDTH) * playerIndex, POSITION_Y - GAP * 2, BAR_WIDTH, BAR_HEIGHT)
-
-  // надпcь
+  // надпcь заглавная
   ctx.font = '16px PT Mono';
   ctx.textBaseline = 'hanging';
   ctx.fillStyle = 'black';
